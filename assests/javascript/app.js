@@ -4,9 +4,9 @@ var countDown;
 var rightAnswers=0;
 var wrongAnswers=0;
 var userGuess;
-var questions = [ "Who has won the most superbowls?","Who has the most Major wins in Golf?"];
-var choices  =[["Tom Brady","Payton Manning","Tony Romo","Bret Frave"],["Tiger Woods","Sam Snead","Jack Nickalas","Bobby Jones"]];
-var answer = ["A. Tom Brady","C. Jack Nickalas"];
+var questions = [ "Who has won the most superbowls?","Who has the most Major tournement wins in Golf?","Which of these have never been a modern Olympic event?","The Stanley Cup is the championship for what league?",];
+var choices  =[["Tom Brady","Payton Manning","Tony Romo","Bret Frave"],["Tiger Woods","Sam Snead","Jack Nicklaus","Bobby Jones"],["Tug-of-War","Kyacking","Jousting","Boxing"],["NFL","NHL","NBA","MLB"],];
+var answer = ["A. Tom Brady","C. Jack Nicklaus","C. Jousting","B. NHL",];
 var questionNumber = 0;
 var startPage;
 var quiz;
@@ -30,20 +30,21 @@ $(document).ready(function(){
         userGuess = $(this).text();
         console.log(userGuess);
             if(userGuess === answer[questionNumber]){
-                alert("yes");
                 clearInterval(countDown);
                 corect();
             }
             else{
-                alert("wrong");
                 clearInterval(countDown);
                 wrong();
             }
     });
 
+    $("body").on("click", ".restart", function(){
+        initialize();
+    })
 });
 
-//Dynamicly create html when 
+//Dynamicly create html when you click start
 function quizText(){
 
     quiz ="<p class='text-center time'>Time remaing: <span id='time'>25</span></p><p class='text-center'>" + questions[questionNumber] + "</p><p class='fist-choice answers'>A. " + choices[questionNumber][0] + "</p><p class='answers'>B. " + choices[questionNumber][1] + "</p><p class='answers'>C. "+ choices[questionNumber][2] + "</p><p class='answers'>D. " + choices[questionNumber][3]+ "</p>";
@@ -61,43 +62,54 @@ function timer(){
         if(timeLeft > 0) {
             timeLeft--;
         }
-        $("#time").text("Time remaining: "+timeLeft);
+        $("#time").text(timeLeft);
     }
 }
+
 // create a function to wait a few seconds and then call the next question
 function transition(){
-    if(questionNumber < 10){
+    if(questionNumber < 3){
         questionNumber++;
-        quizText();
         timeLeft =25;
         timer();
+        quizText();
     }
-    else{
+    else {
         completed();
     }
 }
-// if the user is corect a message plus image will apear and the next question will apper in 3 seconds
+
+// if the user is corect a message plus image will apear and the next question will apper in 4 seconds
 function corect(){
+    thatsRight = "<p>Thats Corect</p><p><img class='center-block' src='assets/images/right.jpg'></p>";
+    $(".content").html(thatsRight);
     rightAnswers++;
     console.log(rightAnswers);
-    setTimeout(transition,3000);
+    setTimeout(transition,4000);
 }
-// if user is wrong show a wrong message and next question will apear in 3 seconds
+
+// if user is wrong show a wrong message and next question will apear in 4 seconds
 function wrong(){
+    thatsWrong = "<p>Thats Wrong!</p><p>The right answer is "+answer[questionNumber]+"</p><p><img class='center-block' src='assets/images/wrong.jpg'></p> ";
+    $(".content").html(thatsWrong);
     wrongAnswers++;
     console.log(wrongAnswers);
-    setTimeout(transition,3000);
+    setTimeout(transition,4000);
 }
-// if user runs out of time a time up message will apear and the question will be marked wrong next question will apear in 3 seconds
+
+// if user runs out of time a time up message will apear and the question will be marked wrong next question will apear in 4 seconds
 function timesUp(){
     wrongAnswers++;
-    
-    setTimeout(transition,3000);
-
+    quiz = "<P>Sorry times up!</p><p><img class='center-block' src='assets/images/timesup' alt ='time'></p>";
+    $(".content").html(quiz);
+    setTimeout(transition,4000);
 }
-// when all questions have been completed users total will be displayed 
-function completed(){
 
-    finalPage = "<p class= 'text-center'> Your score is</p><p class='text-center>" + rightAnswers+ "/10</p>";
+// when all questions have been completed users total will be displayed and timer will stop
+function completed(){
+    if(questionNumber = 4){
+    clearInterval(countDown);
+    finalPage = "<p class= 'text-center'> Your score is "+rightAnswers+"/4</p><p><button type='button' class='btn btn-primary justify-content-center restart'>Restart</button></p>";
     $(".content").html(finalPage);
+    }
 }
