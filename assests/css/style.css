@@ -1,19 +1,42 @@
+body {
+    background-image: url(../images/background.jpg);
+}
+
 .container {
     width: 900px;
 }
 
+header {
+    text-align: center;
+    font-family: 'Black Ops One', cursive;
+    background: darkgrey;
+    color: aliceblue;
+    font-size: 100px;
+    margin-top: 25px;
+    margin: 10px;
+    width: 800px;
+}
+h1 {
+    padding: 5px;
+    color:darkred;
+    font-size: 50px;
+}
 .content {
     width: 800px;
-    background: lightblue;
+    opacity: 40%;
 }
 
 .jumbotron {
+    background: lightgrey;
+    opacity: 70%;
+}
 
+.instructions {
+    font-size: 25px;
 }
 .btn {
     color: black;
     width: 100px;
-    
 }
 
 .answers {
@@ -21,5 +44,20 @@
     font-size: 20px;
     padding: 5px;
     margin: 8px;
+    background: darkgray;
     border: 2px solid black;
+}
+.time {
+    font-size: 23px;
+    color: red;
+    font-family: 'Black Ops One', cursive;
+}
+.question {
+    font-size: 23px;
+}
+
+p {
+    text-align: center;
+    font-size: 30px;
+
 }
